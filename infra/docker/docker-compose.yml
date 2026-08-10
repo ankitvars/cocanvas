@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cocanvas-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: cocanvas
+      POSTGRES_USER: cocanvas
+      POSTGRES_PASSWORD: localdevpassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: cocanvas-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:
