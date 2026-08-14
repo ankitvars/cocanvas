@@ -61,10 +61,12 @@ export default function CommentsOverlay({
               position: 'absolute', 
               left: screenX, 
               top: screenY, 
-              zIndex: hoveredCommentId === comment.id ? 100000 : (isActive ? 99999 : 999), 
-              transform: 'translate(-50%, -50%)',
+              zIndex: hoveredCommentId === comment.id ? 999999 : (isActive ? 999999 : 99999),
+              // This wrapper is anchored at the comment coord; children position themselves
             }}
           >
+            {/* Centering wrapper for the pin bubble only */}
+            <div style={{ position: 'relative', transform: 'translate(-50%, -50%)' }}>
             {/* The Pin Bubble */}
             <button
               onClick={(e) => {
@@ -76,49 +78,57 @@ export default function CommentsOverlay({
                 setEditingCommentId(null);
               }}
               style={{
-                width: '28px',
-                height: '28px',
+                width: '32px',
+                height: '32px',
                 borderRadius: '50%',
                 backgroundColor: isActive ? 'var(--color-accent-primary)' : 'rgba(30, 41, 59, 0.95)',
-                border: isActive ? '2px solid #fff' : '1px solid rgba(255, 255, 255, 0.15)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                border: isActive ? '2px solid #fff' : '2px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: isActive
+                  ? '0 0 0 3px rgba(99,102,241,0.35), 0 4px 12px rgba(0,0,0,0.4)'
+                  : '0 4px 12px rgba(0,0,0,0.3)',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '12px',
+                fontSize: '14px',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
+                overflow: 'hidden',
+                padding: 0,
+                flexShrink: 0,
               }}
             >
               {comment.userAvatar ? (
                 <img 
                   src={getOptimizedAvatarUrl(comment.userAvatar, 64)} 
                   alt={comment.userName} 
-                  style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
+                  style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', display: 'block' }} 
                 />
               ) : (
-                <span>💬</span>
+                <span style={{ lineHeight: 1 }}>💬</span>
               )}
             </button>
 
-            {/* Comment Popover */}
+            {/* Comment Popover — anchored from the pin center */}
             {!isCollapsed && (
               <div 
                 style={{
                   position: 'absolute',
-                  top: '36px',
-                  left: '14px',
+                  // Offset from pin center (pin is 32px wide, centered at 0,0 due to parent transform)
+                  // Place popover below and slightly right of the pin
+                  top: '20px',
+                  left: '4px',
                   width: '240px',
                   backgroundColor: 'rgb(15, 23, 42)',
-                  border: isActive ? '1.5px solid var(--color-accent-primary)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  border: isActive ? '1.5px solid var(--color-accent-primary)' : '1px solid rgba(255, 255, 255, 0.1)',
                   borderRadius: '12px',
-                  boxShadow: 'var(--shadow-xl)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)',
                   padding: '12px',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '8px',
                   zIndex: 99999,
+                  pointerEvents: 'auto',
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -245,6 +255,7 @@ export default function CommentsOverlay({
                 )}
               </div>
             )}
+            </div>{/* end centering wrapper */}
           </div>
         );
       })}

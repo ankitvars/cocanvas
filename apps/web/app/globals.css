@@ -64,6 +64,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   /* NO overflow:hidden here — that lives only on canvas wrapper */
 }
 
@@ -123,4 +124,101 @@ img, video {
 }
 @media (max-width: 480px) {
   html { font-size: 14px; }
+}
+
+/* ── Mobile Responsive Overrides ────────────────────────── */
+@media (max-width: 600px) {
+  .navbar-container {
+    width: 95% !important;
+    padding: 0 12px !important;
+  }
+  .navbar-logo-text {
+    font-size: 16px !important;
+  }
+  .navbar-btn-text {
+    display: none !important;
+  }
+  .navbar-avatar-btn {
+    padding: 4px !important;
+  }
+  .navbar-avatar-chevron {
+    display: none !important;
+  }
+  .hero-cta-group {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 16px !important;
+  }
+  .hero-cta-btn {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .features-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .feature-card {
+    padding: 24px 16px !important;
+  }
+  .hero-section {
+    margin-top: 30px !important;
+    margin-bottom: 24px !important;
+  }
+  .footer-inner {
+    gap: 24px !important;
+    padding: 36px 16px 24px !important;
+  }
+  .footer-link-groups {
+    gap: 20px !important;
+  }
+  .footer-bottom {
+    padding: 16px !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    justify-content: center !important;
+  }
+  .footer-bottom-links {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    justify-content: center !important;
+  }
+  .dashboard-wrapper {
+    padding: 20px 16px !important;
+  }
+  .dashboard-header {
+    min-height: 56px !important;
+    height: auto !important;
+    padding: 12px 16px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .dashboard-controls {
+    flex-wrap: wrap !important;
+  }
+  .dashboard-search {
+    max-width: 100% !important;
+  }
+  .board-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .board-list-item {
+    flex-wrap: wrap !important;
+    padding: 12px !important;
+    gap: 8px !important;
+  }
+  .modal-card {
+    padding: 20px !important;
+  }
+  .hide-on-mobile {
+    display: none !important;
+  }
+  .dashboard-user-email {
+    display: none !important;
+  }
+  .dashboard-logo-text {
+    font-size: 15px !important;
+  }
 }

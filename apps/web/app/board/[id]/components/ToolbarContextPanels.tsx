@@ -5,6 +5,7 @@ import LinePanel from './LinePanel';
 import TextPanel from './TextPanel';
 import EraserPanel from './EraserPanel';
 import ArrowPanel from './ArrowPanel';
+import BucketPanel from './BucketPanel';
 
 interface ToolbarContextPanelsProps {
   tool: string;
@@ -15,6 +16,8 @@ interface ToolbarContextPanelsProps {
   setColor: (c: string) => void;
   strokeWidth: number;
   setStrokeWidth: (w: number) => void;
+  shapeStrokeWidth: number;
+  setShapeStrokeWidth: (w: number) => void;
   sharpness: 'smooth' | 'sharp';
   setSharpness: (s: 'smooth' | 'sharp') => void;
   penStyle: 'solid' | 'dashed' | 'dotted';
@@ -38,6 +41,8 @@ export default function ToolbarContextPanels({
   setColor,
   strokeWidth,
   setStrokeWidth,
+  shapeStrokeWidth,
+  setShapeStrokeWidth,
   sharpness,
   setSharpness,
   penStyle,
@@ -62,6 +67,8 @@ export default function ToolbarContextPanels({
         setTool={setTool}
         color={color}
         setColor={setColor}
+        shapeStrokeWidth={shapeStrokeWidth}
+        setShapeStrokeWidth={setShapeStrokeWidth}
       />
     );
   }
@@ -121,6 +128,15 @@ export default function ToolbarContextPanels({
       <ArrowPanel
         arrowDirection={arrowDirection}
         setArrowDirection={setArrowDirection}
+        color={color}
+        setColor={setColor}
+      />
+    );
+  }
+
+  if (tool === 'bucket') {
+    return (
+      <BucketPanel
         color={color}
         setColor={setColor}
       />

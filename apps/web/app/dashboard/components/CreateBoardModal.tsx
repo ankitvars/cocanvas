@@ -28,7 +28,7 @@ export default function CreateBoardModal({
 
   return (
     <div style={styles.modalOverlay}>
-      <div className="glass" style={styles.modal}>
+      <div className="glass modal-card" style={styles.modal}>
         <h2 style={styles.modalTitle}>Create New Whiteboard</h2>
         <form onSubmit={onSubmit} style={styles.form}>
           <div style={styles.formGroup}>
@@ -96,8 +96,7 @@ const styles: Record<string, React.CSSProperties> = {
     padding: '20px',
   },
   modal: {
-    width: '100%',
-    maxWidth: '480px',
+    width: 'min(460px, 90vw)',
     padding: '32px',
     borderRadius: 'var(--radius-lg)',
     boxShadow: 'var(--shadow-lg)',
@@ -135,7 +134,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   formGroupRow: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: '10px',
   },
   checkbox: {
@@ -158,6 +157,7 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: 'flex-end',
     gap: '12px',
     marginTop: '12px',
+    flexWrap: 'wrap',
   },
   btnCancel: {
     padding: '10px 18px',

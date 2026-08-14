@@ -40,6 +40,8 @@ interface WhiteboardUIProps {
   setColor: (c: string) => void;
   strokeWidth: number;
   setStrokeWidth: (w: number) => void;
+  shapeStrokeWidth: number;
+  setShapeStrokeWidth: (w: number) => void;
   sharpness: 'smooth' | 'sharp';
   setSharpness: (s: 'smooth' | 'sharp') => void;
   penStyle: 'solid' | 'dashed' | 'dotted';
@@ -115,6 +117,8 @@ export function WhiteboardUI({
   setColor,
   strokeWidth,
   setStrokeWidth,
+  shapeStrokeWidth,
+  setShapeStrokeWidth,
   sharpness,
   setSharpness,
   penStyle,
@@ -229,6 +233,8 @@ export function WhiteboardUI({
         setColor={setColor}
         strokeWidth={strokeWidth}
         setStrokeWidth={setStrokeWidth}
+        shapeStrokeWidth={shapeStrokeWidth}
+        setShapeStrokeWidth={setShapeStrokeWidth}
         sharpness={sharpness}
         setSharpness={setSharpness}
         penStyle={penStyle}
@@ -294,7 +300,7 @@ export function WhiteboardUI({
             padding: '0px',
             margin: '0px',
             fontFamily: 'sans-serif',
-            width: `${300 * scale}px`,
+            width: `${((shapes.find((s) => s.id === editingTextId) as any)?.width || 300) * scale}px`,
             minHeight: '24px',
             resize: 'none',
             overflow: 'hidden',

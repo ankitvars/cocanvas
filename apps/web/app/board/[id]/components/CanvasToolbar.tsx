@@ -11,6 +11,8 @@ interface CanvasToolbarProps {
   setColor: (c: string) => void;
   strokeWidth: number;
   setStrokeWidth: (w: number) => void;
+  shapeStrokeWidth: number;
+  setShapeStrokeWidth: (w: number) => void;
   sharpness: 'smooth' | 'sharp';
   setSharpness: (s: 'smooth' | 'sharp') => void;
   penStyle: 'solid' | 'dashed' | 'dotted';
@@ -38,6 +40,8 @@ export default function CanvasToolbar({
   setColor,
   strokeWidth,
   setStrokeWidth,
+  shapeStrokeWidth,
+  setShapeStrokeWidth,
   sharpness,
   setSharpness,
   penStyle,
@@ -219,6 +223,8 @@ export default function CanvasToolbar({
         setColor={setColor}
         strokeWidth={strokeWidth}
         setStrokeWidth={setStrokeWidth}
+        shapeStrokeWidth={shapeStrokeWidth}
+        setShapeStrokeWidth={setShapeStrokeWidth}
         sharpness={sharpness}
         setSharpness={setSharpness}
         penStyle={penStyle}
@@ -241,7 +247,7 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'absolute',
     left: '20px',
     top: '100px',
-    zIndex: 10,
+    zIndex: 10000,
     display: 'flex',
     gap: '12px',
     pointerEvents: 'none',

@@ -42,7 +42,7 @@ export function NewCommentForm({
         display: 'flex',
         flexDirection: 'column',
         gap: '8px',
-        zIndex: 99999,
+        zIndex: 999999,
       }}
       onClick={(e) => e.stopPropagation()}
     >

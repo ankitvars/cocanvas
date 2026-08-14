@@ -122,6 +122,8 @@ export function WhiteboardCanvas({
                       }
                       return newBox;
                     }}
+                    enabledAnchors={selectedShape.type === 'text' ? [] : undefined}
+                    rotateEnabled={selectedShape.type !== 'text'}
                     anchorFill="#6366f1"
                     anchorStroke="#ffffff"
                     anchorStrokeWidth={2}
@@ -171,8 +173,6 @@ export function WhiteboardCanvas({
               strokeWidth={3}
               lineCap="round"
               lineJoin="round"
-              shadowColor={trail.color || '#ef4444'}
-              shadowBlur={8}
               opacity={0.8}
             />
           ))}

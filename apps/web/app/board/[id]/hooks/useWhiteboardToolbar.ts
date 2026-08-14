@@ -5,7 +5,8 @@ export function useWhiteboardToolbar() {
   const [tool, setTool] = useState<ShapeType | 'select' | 'eraser' | 'image' | 'comment' | 'laser' | 'bucket' | 'lasso' | 'draw_to_shape'>('select');
   const [selectedSubShape, setSelectedSubShape] = useState<'rectangle' | 'square' | 'rounded_rect' | 'ellipse' | 'circle' | 'triangle' | 'diamond'>('rectangle');
   const [color, setColor] = useState('#6366f1');
-  const [strokeWidth, setStrokeWidth] = useState(4);
+  const [strokeWidth, setStrokeWidth] = useState(4);       // pen / line / arrow
+  const [shapeStrokeWidth, setShapeStrokeWidth] = useState(2); // shapes only
   const [sharpness, setSharpness] = useState<'smooth' | 'sharp'>('smooth');
   const [eraserWidth, setEraserWidth] = useState(16);
   const [arrowDirection, setArrowDirection] = useState<'right' | 'both'>('right');
@@ -23,6 +24,7 @@ export function useWhiteboardToolbar() {
     selectedSubShape, setSelectedSubShape,
     color, setColor,
     strokeWidth, setStrokeWidth,
+    shapeStrokeWidth, setShapeStrokeWidth,
     sharpness, setSharpness,
     eraserWidth, setEraserWidth,
     arrowDirection, setArrowDirection,

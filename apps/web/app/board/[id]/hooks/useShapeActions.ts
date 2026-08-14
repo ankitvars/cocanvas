@@ -62,11 +62,23 @@ export default function useShapeActions({
     const shape = shapes.find(s => s.id === shapeId);
     if (!shape) return;
     
-    const newWidth = Math.round(shape.width * scaleX);
-    const newHeight = Math.round(shape.height * scaleY);
-    const newX = Math.round(node.x());
-    const newY = Math.round(node.y());
+    let newWidth = Math.round((shape.width || (node.width ? node.width() : 0)) * scaleX);
+    let newHeight = Math.round((shape.height || (node.height ? node.height() : 0)) * scaleY);
+    let newX = Math.round(node.x());
+    let newY = Math.round(node.y());
     const newRotation = Math.round(node.rotation());
+    
+    // Normalize negative dimensions (flipped handles)
+    if (['rectangle', 'square', 'rounded_rect', 'ellipse', 'circle', 'diamond', 'frame', 'embed', 'image'].includes(shape.type)) {
+      if (newWidth < 0) {
+        newX += newWidth;
+        newWidth = Math.abs(newWidth);
+      }
+      if (newHeight < 0) {
+        newY += newHeight;
+        newHeight = Math.abs(newHeight);
+      }
+    }
     
     const updates: any = {
       x: newX,

@@ -39,6 +39,7 @@ export default function WhiteboardClient({ board, user, members, wsUrl }: Whiteb
     selectedSubShape, setSelectedSubShape,
     color, setColor,
     strokeWidth, setStrokeWidth,
+    shapeStrokeWidth, setShapeStrokeWidth,
     sharpness, setSharpness,
     eraserWidth, setEraserWidth,
     arrowDirection, setArrowDirection,
@@ -50,6 +51,16 @@ export default function WhiteboardClient({ board, user, members, wsUrl }: Whiteb
     showEmojiPicker, setShowEmojiPicker,
     pickerPos, setPickerPos,
   } = useWhiteboardToolbar();
+
+  // Wrap setTool: reset pen-specific styles when leaving pen/line tools
+  const PEN_TOOLS = new Set(['freehand', 'line']);
+  const handleSetTool: typeof setTool = (next) => {
+    if (!PEN_TOOLS.has(next as string) && PEN_TOOLS.has(tool as string)) {
+      setSharpness('smooth');
+      setPenStyle('solid');
+    }
+    setTool(next);
+  };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const doc = useRef(new Y.Doc()).current;
@@ -127,12 +138,13 @@ export default function WhiteboardClient({ board, user, members, wsUrl }: Whiteb
   });
 
   useKeyboardShortcuts({
-    setTool,
+    setTool: handleSetTool,
     setBgType,
     setShowHelpModal,
     setShowEmojiPicker,
     setPickerPos,
     mouseScreenPos,
+    selectedSubShape,
   });
 
   const {
@@ -162,9 +174,10 @@ export default function WhiteboardClient({ board, user, members, wsUrl }: Whiteb
     handleMouseUp: handleDrawingMouseUp,
   } = useCanvasDrawing({
     tool,
-    setTool,
+    setTool: handleSetTool,
     color,
     strokeWidth,
+    shapeStrokeWidth,
     sharpness,
     penStyle,
     fontSize,
@@ -217,7 +230,7 @@ export default function WhiteboardClient({ board, user, members, wsUrl }: Whiteb
     getCursorStyle,
   } = useWhiteboardEvents({
     tool,
-    setTool,
+    setTool: handleSetTool,
     scale,
     position,
     setPosition,
@@ -275,13 +288,15 @@ export default function WhiteboardClient({ board, user, members, wsUrl }: Whiteb
         isConnected={isConnected}
         handleExport={handleExport}
         tool={tool}
-        setTool={setTool}
+        setTool={handleSetTool}
         selectedSubShape={selectedSubShape}
         setSelectedSubShape={setSelectedSubShape}
         color={color}
         setColor={setColor}
         strokeWidth={strokeWidth}
         setStrokeWidth={setStrokeWidth}
+        shapeStrokeWidth={shapeStrokeWidth}
+        setShapeStrokeWidth={setShapeStrokeWidth}
         sharpness={sharpness}
         setSharpness={setSharpness}
         penStyle={penStyle}

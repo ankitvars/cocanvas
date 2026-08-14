@@ -83,7 +83,7 @@ export default function DashboardClient({ initialBoards, user, signOutAction }: 
     <div style={styles.dashboardContainer}>
       <DashboardHeader user={user} signOutAction={signOutAction} />
 
-      <main style={styles.main}>
+      <main className="dashboard-wrapper" style={styles.main}>
         <DashboardControls 
           search={search}
           setSearch={setSearch}

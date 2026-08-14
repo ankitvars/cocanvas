@@ -18,13 +18,13 @@ export default async function Home() {
       <Navbar user={user} />
 
       {/* Hero */}
-      <section style={styles.heroSection}>
+      <section style={styles.heroSection} className="hero-section">
         <div style={styles.badge}>
           <span style={styles.badgeDot}></span>
           Now in Beta · 100% Free Stack
         </div>
         <h1 style={styles.heroTitle}>
-          Real-Time Collaborative <br />
+          Real-Time Collaborative <br className="hide-on-mobile" />
           <span className="gradient-text">Infinite Whiteboard</span>
         </h1>
         <p style={styles.heroSubtitle}>
@@ -33,15 +33,16 @@ export default async function Home() {
           fast canvas.
         </p>
 
-        <div style={styles.ctaGroup}>
-          <Link href={user ? '/dashboard' : '/login'} style={styles.btnHeroPrimary}>
+        <div style={styles.ctaGroup} className="hero-cta-group">
+          <Link href={user ? '/dashboard' : '/login'} style={styles.btnHeroPrimary} className="hero-cta-btn">
             {user ? 'Open Dashboard →' : 'Start Drawing — Free'}
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/ankitvars/cocanvas"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.btnHeroSecondary}
+            className="hero-cta-btn"
           >
             View on GitHub
           </a>
@@ -57,8 +58,8 @@ export default async function Home() {
 
       {/* Features Grid */}
       <section style={styles.featuresSection}>
-        <div style={styles.featuresGrid}>
-          <div className="glass" style={styles.featureCard}>
+        <div style={styles.featuresGrid} className="features-grid">
+          <div className="glass feature-card" style={styles.featureCard}>
             <div style={styles.featureIconWrapper}>
               <Zap size={24} color="var(--color-accent-secondary)" />
             </div>
@@ -68,7 +69,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="glass" style={styles.featureCard}>
+          <div className="glass feature-card" style={styles.featureCard}>
             <div style={styles.featureIconWrapper}>
               <GitBranch size={24} color="var(--color-accent-primary)" />
             </div>
@@ -78,7 +79,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="glass" style={styles.featureCard}>
+          <div className="glass feature-card" style={styles.featureCard}>
             <div style={styles.featureIconWrapper}>
               <Users size={24} color="var(--color-accent-secondary)" />
             </div>
@@ -88,7 +89,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="glass" style={styles.featureCard}>
+          <div className="glass feature-card" style={styles.featureCard}>
             <div style={styles.featureIconWrapper}>
               <Shield size={24} color="var(--color-accent-primary)" />
             </div>
@@ -98,7 +99,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="glass" style={styles.featureCard}>
+          <div className="glass feature-card" style={styles.featureCard}>
             <div style={styles.featureIconWrapper}>
               <Edit3 size={24} color="var(--color-accent-secondary)" />
             </div>
@@ -108,7 +109,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="glass" style={styles.featureCard}>
+          <div className="glass feature-card" style={styles.featureCard}>
             <div style={styles.featureIconWrapper}>
               <Zap size={24} color="var(--color-accent-primary)" />
             </div>
@@ -133,14 +134,14 @@ const styles: Record<string, React.CSSProperties> = {
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'var(--color-bg-primary)',
-    paddingTop: '80px',
+    paddingTop: '70px',
   },
   bgGlow1: {
     position: 'fixed',
     top: '-10%',
     left: '10%',
-    width: '500px',
-    height: '500px',
+    width: 'min(500px, 80vw)',
+    height: 'min(500px, 80vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, hsla(250, 90%, 65%, 0.12) 0%, transparent 70%)',
     pointerEvents: 'none',
@@ -150,8 +151,8 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'fixed',
     bottom: '10%',
     right: '5%',
-    width: '500px',
-    height: '500px',
+    width: 'min(500px, 80vw)',
+    height: 'min(500px, 80vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, hsla(180, 70%, 50%, 0.08) 0%, transparent 70%)',
     pointerEvents: 'none',
@@ -254,7 +255,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   featuresGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
     gap: '24px',
   },
   featureCard: {

@@ -6,6 +6,7 @@ interface UseCanvasDrawingProps {
   setTool: (t: any) => void;
   color: string;
   strokeWidth: number;
+  shapeStrokeWidth: number;
   sharpness: 'smooth' | 'sharp';
   penStyle: 'solid' | 'dashed' | 'dotted';
   fontSize: number;
@@ -106,6 +107,7 @@ export default function useCanvasDrawing({
   setTool,
   color,
   strokeWidth,
+  shapeStrokeWidth,
   sharpness,
   penStyle,
   fontSize,
@@ -167,7 +169,11 @@ export default function useCanvasDrawing({
       rotation: 0,
       fill: tool === 'frame' ? 'rgba(255, 255, 255, 0.01)' : 'transparent',
       stroke: tool === 'frame' ? '#94a3b8' : color,
-      strokeWidth: tool === 'frame' ? 1.5 : strokeWidth,
+      strokeWidth: tool === 'frame' ? 1.5 : (
+        ['rectangle','square','rounded_rect','ellipse','circle','triangle','diamond'].includes(tool)
+          ? shapeStrokeWidth
+          : strokeWidth
+      ),
       opacity: 1,
       zIndex: shapes.length,
       createdBy: user.name,
@@ -208,7 +214,7 @@ export default function useCanvasDrawing({
     isDrawingRef.current = true;
     liveShapeRef.current = base;
     setLiveShape({ ...base });
-  }, [tool, color, strokeWidth, shapes.length, user.name, user.role, toCanvas, sharpness, eraserWidth, arrowDirection, position.x, position.y, scale, penStyle, fontSize, fontWeight, setTool, setSelectedShapeId, setEditingTextId, setEditingTextValue, setEditingTextPos, isPanningRef, setIsPanning, isSpacePressedRef, presenceManagerRef]);
+  }, [tool, color, strokeWidth, shapeStrokeWidth, shapes.length, user.name, user.role, toCanvas, sharpness, eraserWidth, arrowDirection, position.x, position.y, scale, penStyle, fontSize, fontWeight, setTool, setSelectedShapeId, setEditingTextId, setEditingTextValue, setEditingTextPos, isPanningRef, setIsPanning, isSpacePressedRef, presenceManagerRef]);
 
   // Dragging shape or moving mouse
   const handleMouseMove = useCallback((e: any) => {
@@ -277,6 +283,17 @@ export default function useCanvasDrawing({
     isDrawingRef.current = false;
 
     const cur = liveShapeRef.current;
+    let finalShape = { ...cur };
+    if (['rectangle', 'square', 'rounded_rect', 'ellipse', 'circle', 'diamond', 'frame', 'embed', 'image'].includes(finalShape.type)) {
+      if (finalShape.width < 0) {
+        finalShape.x += finalShape.width;
+        finalShape.width = Math.abs(finalShape.width);
+      }
+      if (finalShape.height < 0) {
+        finalShape.y += finalShape.height;
+        finalShape.height = Math.abs(finalShape.height);
+      }
+    }
 
     if (tool === 'draw_to_shape') {
       const pts = (cur as any).points || [];
@@ -294,7 +311,7 @@ export default function useCanvasDrawing({
       const h = maxY - minY;
 
       if (w > 5 && h > 5) {
-        const finalShape: any = {
+        const recognizedShape: any = {
           ...cur,
           type: recognizedType,
           x: minX,
@@ -304,26 +321,26 @@ export default function useCanvasDrawing({
         };
 
         if (recognizedType === 'line') {
-          finalShape.points = [pts[0], pts[1], pts[pts.length - 2], pts[pts.length - 1]];
+          recognizedShape.points = [pts[0], pts[1], pts[pts.length - 2], pts[pts.length - 1]];
         } else if (recognizedType === 'triangle') {
-          finalShape.sides = 3;
+          recognizedShape.sides = 3;
         }
 
-        shapeManagerRef.current?.addShape(finalShape);
+        shapeManagerRef.current?.addShape(recognizedShape);
       }
-    } else if ((cur.type as string) === 'frame') {
+    } else if ((finalShape.type as string) === 'frame') {
       const frameCount = shapes.filter(s => (s.type as string) === 'frame').length;
       shapeManagerRef.current?.addShape({
-        ...(cur as any),
+        ...(finalShape as any),
         name: `Frame ${frameCount + 1}`,
       } as any);
-    } else if ((cur.type as string) === 'embed') {
+    } else if ((finalShape.type as string) === 'embed') {
       shapeManagerRef.current?.addShape({
-        ...(cur as any),
+        ...(finalShape as any),
         src: "",
       } as any);
     } else {
-      shapeManagerRef.current?.addShape(cur);
+      shapeManagerRef.current?.addShape(finalShape);
     }
 
     shapeManagerRef.current?.stopCapturing();

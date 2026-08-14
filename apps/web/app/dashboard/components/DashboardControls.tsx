@@ -16,8 +16,8 @@ export default function DashboardControls({
   setShowModal,
 }: DashboardControlsProps) {
   return (
-    <div style={styles.controls}>
-      <div style={styles.searchWrapper}>
+    <div className="dashboard-controls" style={styles.controls}>
+      <div className="dashboard-search" style={styles.searchWrapper}>
         <Search size={18} color="var(--color-text-muted)" style={styles.searchIcon} />
         <input 
           type="text" 
@@ -99,6 +99,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
+    flexWrap: 'wrap',
   },
   viewToggle: {
     display: 'flex',

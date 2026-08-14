@@ -44,7 +44,7 @@ export default function BoardList({
 
   if (view === 'grid') {
     return (
-      <div style={styles.grid}>
+      <div className="board-grid" style={styles.grid}>
         {filteredBoards.map(board => (
           <Link href={`/board/${board.id}`} key={board.id} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="glass" style={styles.boardCard}>
@@ -87,7 +87,7 @@ export default function BoardList({
   return (
     <div className="glass" style={styles.listView}>
       {filteredBoards.map(board => (
-        <div key={board.id} style={styles.listItem}>
+        <div key={board.id} className="board-list-item" style={styles.listItem}>
           <div style={styles.listInfo}>
             <Edit3 size={16} color="var(--color-accent-secondary)" style={{ marginRight: '12px' }} />
             <Link href={`/board/${board.id}`} style={styles.listTitle}>
@@ -150,7 +150,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
     gap: '24px',
   },
   boardCard: {
@@ -222,16 +222,23 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     padding: '16px 24px',
     borderBottom: '1px solid var(--color-border)',
+    flexWrap: 'wrap',
   },
   listInfo: {
     display: 'flex',
     alignItems: 'center',
+    overflow: 'hidden',
+    minWidth: 0,
   },
   listTitle: {
     fontSize: '16px',
     fontWeight: 600,
     color: 'var(--color-text-primary)',
     textDecoration: 'none',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
   },
   listMeta: {
     display: 'flex',

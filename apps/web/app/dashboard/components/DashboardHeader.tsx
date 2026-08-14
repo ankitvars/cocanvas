@@ -12,18 +12,18 @@ interface DashboardHeaderProps {
 
 export default function DashboardHeader({ user, signOutAction }: DashboardHeaderProps) {
   return (
-    <header className="glass" style={styles.header}>
+    <header className="glass dashboard-header" style={styles.header}>
       <div style={styles.logo}>
         <div style={styles.logoIcon}>
           <Edit3 size={18} color="#fff" />
         </div>
-        <span style={styles.logoText}>CoCanvas Dashboard</span>
+        <span style={styles.logoText} className="dashboard-logo-text">CoCanvas Dashboard</span>
       </div>
 
       <div style={styles.userProfile}>
         <div style={styles.userInfo}>
           <span style={styles.userName}>{user.name || 'User'}</span>
-          <span style={styles.userEmail}>{user.email}</span>
+          <span style={styles.userEmail} className="dashboard-user-email">{user.email}</span>
         </div>
         {user.image ? (
           <img src={getOptimizedAvatarUrl(user.image, 64)} alt="User Avatar" style={styles.avatar} />
@@ -45,12 +45,14 @@ export default function DashboardHeader({ user, signOutAction }: DashboardHeader
 
 const styles: Record<string, React.CSSProperties> = {
   header: {
-    height: '70px',
+    minHeight: '70px',
+    height: 'auto',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '0 32px',
     borderBottom: '1px solid var(--color-border)',
+    flexWrap: 'wrap',
   },
   logo: {
     display: 'flex',
@@ -88,6 +90,10 @@ const styles: Record<string, React.CSSProperties> = {
   userEmail: {
     fontSize: '12px',
     color: 'var(--color-text-secondary)',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: '150px',
   },
   avatar: {
     width: '32px',

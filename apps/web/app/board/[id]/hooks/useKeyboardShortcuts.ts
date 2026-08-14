@@ -10,6 +10,7 @@ interface UseKeyboardShortcutsProps {
   setShowEmojiPicker: React.Dispatch<React.SetStateAction<boolean>>;
   setPickerPos: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
   mouseScreenPos: { x: number; y: number };
+  selectedSubShape: 'rectangle' | 'square' | 'rounded_rect' | 'ellipse' | 'circle' | 'triangle' | 'diamond';
 }
 
 export function useKeyboardShortcuts({
@@ -19,6 +20,7 @@ export function useKeyboardShortcuts({
   setShowEmojiPicker,
   setPickerPos,
   mouseScreenPos,
+  selectedSubShape,
 }: UseKeyboardShortcutsProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -52,33 +54,39 @@ export function useKeyboardShortcuts({
       if (key === 'v' || key === '1' || e.key === '!') {
         e.preventDefault();
         setTool('select');
-      } else if (key === 'r' || key === '2' || e.key === '@') {
+      } else if (key === 'p' || key === '2' || e.key === '@') {
+        e.preventDefault();
+        setTool('freehand');
+      } else if (key === 'l' || key === '3' || e.key === '#') {
+        e.preventDefault();
+        setTool('line');
+      } else if (key === '4' || e.key === '$') {
+        e.preventDefault();
+        setTool(selectedSubShape);
+      } else if (key === 'r') {
         e.preventDefault();
         setTool('rectangle');
-      } else if (key === 'd' || key === '3' || e.key === '#') {
+      } else if (key === 'd') {
         e.preventDefault();
         setTool('diamond');
-      } else if (key === 'o' || key === '4' || e.key === '$') {
+      } else if (key === 'o') {
         e.preventDefault();
         setTool('ellipse');
       } else if (key === 'a' || key === '5' || e.key === '%') {
         e.preventDefault();
         setTool('arrow');
-      } else if (key === 'l' || key === '6' || e.key === '^') {
-        e.preventDefault();
-        setTool('line');
-      } else if (key === 'p' || key === '7' || e.key === '&') {
-        e.preventDefault();
-        setTool('freehand');
-      } else if (key === 't' || key === '8' || e.key === '*') {
+      } else if (key === 't' || key === '6' || e.key === '^') {
         e.preventDefault();
         setTool('text');
-      } else if (key === '9' || e.key === '(') {
-        e.preventDefault();
-        setTool('image');
-      } else if (key === 'e' || key === '0' || e.key === ')') {
+      } else if (key === 'e' || key === '7' || e.key === '&') {
         e.preventDefault();
         setTool('eraser');
+      } else if (key === 'c' || key === '8' || e.key === '*') {
+        e.preventDefault();
+        setTool('comment');
+      } else if (key === 'i' || key === '9' || e.key === '(') {
+        e.preventDefault();
+        setTool('image');
       } else if (key === 'f') {
         e.preventDefault();
         setTool('frame');
@@ -110,5 +118,5 @@ export function useKeyboardShortcuts({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [mouseScreenPos, setTool, setBgType, setShowHelpModal, setShowEmojiPicker, setPickerPos]);
+  }, [mouseScreenPos, setTool, setBgType, setShowHelpModal, setShowEmojiPicker, setPickerPos, selectedSubShape]);
 }

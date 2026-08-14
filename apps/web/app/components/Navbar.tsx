@@ -23,12 +23,12 @@ export default function Navbar({ user }: NavbarProps) {
   const isAuthed = !!user || clientIsLoggedIn;
 
   return (
-    <header className="glass" style={styles.header}>
+    <header className="glass navbar-container" style={styles.header}>
       <Link href="/" style={styles.logoContainer}>
         <div style={styles.logoIcon}>
           <Edit3 size={20} color="#fff" />
         </div>
-        <span style={styles.logoText}>CoCanvas</span>
+        <span style={styles.logoText} className="navbar-logo-text">CoCanvas</span>
       </Link>
 
       <nav style={styles.navLinks}>
@@ -37,7 +37,7 @@ export default function Navbar({ user }: NavbarProps) {
           <div style={styles.userMenu}>
             <Link href="/dashboard" style={styles.btnPrimary}>
               <LayoutDashboard size={15} />
-              Dashboard
+              <span className="navbar-btn-text">Dashboard</span>
             </Link>
 
             {user && (
@@ -45,6 +45,7 @@ export default function Navbar({ user }: NavbarProps) {
                 <button
                   onClick={() => setDropdownOpen(o => !o)}
                   style={styles.avatarBtn}
+                  className="navbar-avatar-btn"
                 >
                   {user.image ? (
                     <img src={getOptimizedAvatarUrl(user.image, 64)} alt="" style={styles.avatarImg} />
@@ -53,7 +54,7 @@ export default function Navbar({ user }: NavbarProps) {
                       {user.name?.[0]?.toUpperCase() || '?'}
                     </div>
                   )}
-                  <ChevronDown size={13} style={{ color: 'var(--color-text-muted)' }} />
+                  <ChevronDown size={13} className="navbar-avatar-chevron" style={{ color: 'var(--color-text-muted)' }} />
                 </button>
 
                 {dropdownOpen && (
@@ -78,9 +79,9 @@ export default function Navbar({ user }: NavbarProps) {
         ) : (
           // ── Logged-out state ───────────────────────────────────────────────
           <>
-            <Link href="/login" style={styles.btnSecondary}>Sign In</Link>
+            <Link href="/login" style={styles.btnSecondary} className="navbar-btn-text">Sign In</Link>
             <Link href="/login" style={styles.btnPrimary}>
-              Get Started Free
+              Get Started
             </Link>
           </>
         )}
@@ -97,7 +98,8 @@ const styles: Record<string, React.CSSProperties> = {
     transform: 'translateX(-50%)',
     width: '90%',
     maxWidth: '1200px',
-    height: '64px',
+    minHeight: '64px',
+    height: 'auto',
     borderRadius: 'var(--radius-lg)',
     display: 'flex',
     justifyContent: 'space-between',
@@ -188,6 +190,7 @@ const styles: Record<string, React.CSSProperties> = {
     top: 'calc(100% + 8px)',
     right: 0,
     minWidth: '200px',
+    maxWidth: 'calc(100vw - 32px)',
     borderRadius: 'var(--radius-md)',
     padding: '8px',
     zIndex: 200,
@@ -202,10 +205,16 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '14px',
     fontWeight: 600,
     color: 'var(--color-text-primary)',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   dropdownEmail: {
     fontSize: '12px',
     color: 'var(--color-text-muted)',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   dropdownDivider: {
     height: '1px',

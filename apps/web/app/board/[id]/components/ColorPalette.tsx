@@ -22,12 +22,22 @@ export default function ColorPalette({ color, setColor }: ColorPaletteProps) {
             style={{
               ...styles.presetColorBtn,
               backgroundColor: c,
-              border: color === c ? '2px solid var(--color-accent-primary)' : '1px solid var(--color-border)'
+              border: color === c ? '2px solid #fff' : '1px solid var(--color-border)',
+              outline: color === c ? '2px solid var(--color-accent-primary)' : 'none',
+              outlineOffset: '1px',
+              transform: color === c ? 'scale(1.2)' : 'scale(1)'
             }}
             title={c}
           />
         ))}
-        <div style={styles.customColorWrap}>
+        <div style={{
+          ...styles.customColorWrap,
+          border: !PRESET_COLORS.includes(color) ? '2px solid #fff' : '1px solid var(--color-border)',
+          outline: !PRESET_COLORS.includes(color) ? '2px solid var(--color-accent-primary)' : 'none',
+          outlineOffset: '1px',
+          transform: !PRESET_COLORS.includes(color) ? 'scale(1.2)' : 'scale(1)',
+          transition: 'all 0.15s ease',
+        }}>
           <input 
             type="color" 
             value={color}
@@ -45,7 +55,7 @@ const styles: Record<string, React.CSSProperties> = {
   row: { display: 'flex', flexDirection: 'column', gap: '6px' },
   label: { fontSize: '11px', color: 'var(--color-text-muted)', fontWeight: 500 },
   colorPalette: { display: 'flex', flexWrap: 'wrap', gap: '6px', padding: '4px 0' },
-  presetColorBtn: { width: '20px', height: '20px', borderRadius: '50%', cursor: 'pointer', padding: 0, transition: 'var(--transition-fast)' },
+  presetColorBtn: { width: '20px', height: '20px', borderRadius: '50%', cursor: 'pointer', padding: 0, transition: 'all 0.15s ease' },
   customColorWrap: { position: 'relative', width: '20px', height: '20px', borderRadius: '50%', overflow: 'hidden', border: '1px solid var(--color-border)' },
   customColorInput: { position: 'absolute', top: '-10px', left: '-10px', width: '40px', height: '40px', cursor: 'pointer' }
 };

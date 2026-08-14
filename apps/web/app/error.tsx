@@ -79,22 +79,22 @@ export default function GlobalError({ error, reset }: ErrorProps) {
 
 const styles: Record<string, React.CSSProperties> = {
   container: {
-    width: '100vw',
-    height: '100vh',
+    width: '100%',
+    minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'var(--color-bg-primary)',
     position: 'relative',
-    overflow: 'hidden',
+    overflow: 'auto',
     padding: '24px',
   },
   bgGlow1: {
     position: 'absolute',
     top: '20%',
     left: '20%',
-    width: '400px',
-    height: '400px',
+    width: 'min(400px, 80vw)',
+    height: 'min(400px, 80vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, hsla(0, 90%, 65%, 0.08) 0%, transparent 70%)',
     pointerEvents: 'none',
@@ -104,8 +104,8 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'absolute',
     bottom: '20%',
     right: '20%',
-    width: '450px',
-    height: '450px',
+    width: 'min(450px, 80vw)',
+    height: 'min(450px, 80vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, hsla(250, 90%, 65%, 0.08) 0%, transparent 70%)',
     pointerEvents: 'none',
@@ -114,7 +114,7 @@ const styles: Record<string, React.CSSProperties> = {
   card: {
     width: '100%',
     maxWidth: '500px',
-    padding: '40px 32px',
+    padding: 'clamp(24px, 4vw, 40px) clamp(20px, 4vw, 32px)',
     borderRadius: 'var(--radius-lg)',
     display: 'flex',
     flexDirection: 'column',
@@ -210,10 +210,14 @@ const styles: Record<string, React.CSSProperties> = {
   errorMsg: {
     color: 'var(--color-error)',
     marginBottom: '8px',
+    wordBreak: 'break-word',
+    overflowWrap: 'anywhere',
   },
   errorDigest: {
     color: 'var(--color-text-secondary)',
     marginBottom: '8px',
+    wordBreak: 'break-word',
+    overflowWrap: 'anywhere',
   },
   stackTrace: {
     fontFamily: 'var(--font-mono)',

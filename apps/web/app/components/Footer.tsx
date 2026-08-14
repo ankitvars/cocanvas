@@ -22,7 +22,7 @@ export default function Footer({ user }: FooterProps) {
 
   return (
     <footer style={styles.footer}>
-      <div style={styles.footerInner}>
+      <div style={styles.footerInner} className="footer-inner">
         {/* Brand */}
         <div style={styles.brand}>
           <div style={styles.logoRow}>
@@ -32,11 +32,11 @@ export default function Footer({ user }: FooterProps) {
             <span style={styles.logoText}>CoCanvas</span>
           </div>
           <p style={styles.tagline}>
-            Real-time collaborative infinite canvas.<br />
+            Real-time collaborative infinite canvas. 
             Built with Yjs CRDTs, WebSockets &amp; Redis.
           </p>
           <div style={styles.socialRow}>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" style={styles.socialLink}>
+            <a href="https://github.com/ankitvars/cocanvas" target="_blank" rel="noopener noreferrer" style={styles.socialLink}>
               <Github size={17} />
             </a>
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={styles.socialLink}>
@@ -49,7 +49,7 @@ export default function Footer({ user }: FooterProps) {
         </div>
 
         {/* Links */}
-        <div style={styles.linkGroups}>
+        <div style={styles.linkGroups} className="footer-link-groups">
           <div style={styles.linkGroup}>
             <span style={styles.linkGroupTitle}>Product</span>
             <Link href="/dashboard" style={styles.footerLink}>Dashboard</Link>
@@ -65,9 +65,9 @@ export default function Footer({ user }: FooterProps) {
         </div>
       </div>
 
-      <div style={styles.footerBottom}>
+      <div style={styles.footerBottom} className="footer-bottom">
         <span>© {year} CoCanvas. Open source. MIT License.</span>
-        <div style={styles.bottomLinks}>
+        <div style={styles.bottomLinks} className="footer-bottom-links">
           <span style={styles.techBadge}>React 19</span>
           <span style={styles.techBadge}>TypeScript</span>
           <span style={styles.techBadge}>Turborepo</span>

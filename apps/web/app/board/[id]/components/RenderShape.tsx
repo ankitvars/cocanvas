@@ -5,7 +5,11 @@ import { Shape } from '@cocanvas/shared';
 
 const RenderImageShape = ({ shape, base }: { shape: any, base: any }) => {
   const [img] = useImage(shape.src);
-  return <KonvaImage key={base.id} {...base} image={img} x={shape.x} y={shape.y} width={shape.width} height={shape.height} />;
+  const ix = shape.width < 0 ? shape.x + shape.width : shape.x;
+  const iy = shape.height < 0 ? shape.y + shape.height : shape.y;
+  const iw = Math.abs(shape.width);
+  const ih = Math.abs(shape.height);
+  return <KonvaImage key={base.id} {...base} image={img} x={ix} y={iy} width={iw} height={ih} />;
 };
 
 interface RenderShapeProps {
@@ -89,6 +93,8 @@ export default function RenderShape({ shape, isLive = false, base }: RenderShape
     }
     if (shape.type === 'text') {
       return <KonvaText key={elementKey} {...base} x={shape.x} y={shape.y}
+        width={shape.width || undefined}
+        height={shape.height || undefined}
         text={(shape as any).text} fontSize={(shape as any).fontSize || 16}
         fontFamily={(shape as any).fontFamily || 'sans-serif'}
         fontStyle={(shape as any).fontWeight === 'bold' ? 'bold' : 'normal'}
@@ -99,13 +105,17 @@ export default function RenderShape({ shape, isLive = false, base }: RenderShape
     }
     if ((shape.type as string) === 'frame') {
       const s = shape as any;
+      const fx = s.width < 0 ? s.x + s.width : s.x;
+      const fy = s.height < 0 ? s.y + s.height : s.y;
+      const fw = Math.abs(s.width);
+      const fh = Math.abs(s.height);
       return (
         <Group key={elementKey} {...base}>
           <Rect
-            x={s.x}
-            y={s.y}
-            width={s.width}
-            height={s.height}
+            x={fx}
+            y={fy}
+            width={fw}
+            height={fh}
             fill="rgba(255, 255, 255, 0.02)"
             stroke="#94a3b8"
             strokeWidth={1.5}
@@ -113,8 +123,8 @@ export default function RenderShape({ shape, isLive = false, base }: RenderShape
             cornerRadius={4}
           />
           <KonvaText
-            x={s.x + 8}
-            y={s.y - 18}
+            x={fx + 8}
+            y={fy - 18}
             text={s.name || 'Frame'}
             fontSize={12}
             fontStyle="bold"
